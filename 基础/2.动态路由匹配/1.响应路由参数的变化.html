@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <router-link to="/user/foo">Go to Foo</router-link>
+            <router-link to="/user/bar">Go to Bar</router-link>
+        </p>
+        <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.js"></script>
+    <script>
+        const User = {
+            template: '<div>12</div>',
+            // watch: {
+            //     $route: {
+            //         handler(to, from) {
+            //             console.log('to: ', to)
+            //             console.log('from: ', from)
+            //         },
+            //         immediate: true
+            //     }
+            // },
+            beforeRouteUpdate(to, from, next) {
+                console.log('to: ', to)
+                console.log('from: ', from)
+                next()
+            }
+        }
+
+        const router = new VueRouter({
+            routes: [
+                { path: '/user/:id', component: User }
+            ]
+        })
+
+        const app = new Vue({
+            router
+        }).$mount('#app')
+    </script>
+</body>
+</html>

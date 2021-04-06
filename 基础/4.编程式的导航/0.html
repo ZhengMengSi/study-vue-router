@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button @click="jump">跳</button>
+    <router-view></router-view>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.js"></script>
+<script>
+    var User = {
+        template: '<div>{{ $route.params.id }}</div>'
+    }
+
+    var router = new VueRouter({
+        routes: [
+            {
+                name: 'User',
+                path: '/user/:id',
+                component: User
+            }
+        ]
+    })
+
+    new Vue({
+        el: '#app',
+        router,
+        methods: {
+            jump() {
+                this.$router.push(
+                    {
+                        name: 'User',
+                        params: {
+                            id: '123'
+                        }
+                    },
+                    () => {
+                        console.log(1);
+                    },
+                    () => {
+                        console.log(2);
+                    }
+                )
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>
