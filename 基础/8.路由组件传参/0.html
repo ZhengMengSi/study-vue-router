@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>路由组件传参</h1>
+    <router-link to="/user/1">跳转到/user/1</router-link>
+    <router-view></router-view>
+    <router-view name="sidebar"></router-view>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.js"></script>
+<script>
+    const User = {
+        props: ['id'],
+        template: '<div>User {{ id }}</div>'
+    }
+    const Sidebar = {
+        props: ['id'],
+        template: '<div>Sidebar {{ id }}</div>'
+    }
+
+    const router = new VueRouter({
+        routes: [
+            // { path: '/user/:id', component: User, props: true },
+
+            // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
+            {
+                path: '/user/:id',
+                components: { default: User, sidebar: Sidebar },
+                props: { default: true, sidebar: true }
+            }
+        ]
+    })
+
+    new Vue({
+        el: '#app',
+        router
+    })
+</script>
+</body>
+</html>

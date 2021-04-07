@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>命名路由</h1>
+    <router-link :to="{ name: 'user', params: { userId: 123 } }">声明式导航：跳转到/user/123</router-link>
+    <button @click="jump">编程式导航：跳转到/user/2</button>
+    <router-view></router-view>
+    <router-view name="a"></router-view>
+    <router-view name="b"></router-view>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.js"></script>
+<script>
+    const User = {
+        template: '<div>{{ $route.params.userId }}</div>',
+        name: 'User'
+    }
+    const UserA = {
+        template: '<div>UserA</div>',
+        name: 'UserA'
+    }
+    const UserB = {
+        template: '<div>UserB</div>',
+        name: 'UserB'
+    }
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/user/:userId',
+                components: {
+                    default: User,
+                    a: UserA,
+                    b: UserB
+                },
+                name: 'user'
+            }
+        ]
+    })
+
+    new Vue({
+        router,
+        el: '#app',
+        methods: {
+            jump() {
+                this.$router.push({ name: 'user', params: { userId: 2 } })
+            }
+        }
+    })
+</script>
+</body>
+</html>
